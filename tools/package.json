@@ -1,0 +1,9 @@
+{
+    "name": "hadith-tools",
+    "private": true,
+    "description": "Build tools for the Hadith app: parse the scrape, build the indexes, embed the corpus. The app itself ships with no dependencies - this package.json exists only for tools/.",
+    "type": "commonjs",
+    "dependencies": {
+        "@huggingface/transformers": "4.3.0"
+    }
+}

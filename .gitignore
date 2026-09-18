@@ -1,0 +1,37 @@
+# ===========================================================================
+# Large files never enter this repository (GitHub refuses a push over 100 MB,
+# and warns from 50 MB). Git cannot ignore by size, so the places a large file
+# can appear are ignored by path:
+#
+#   tools/node_modules/**  the dev dependencies — onnxruntime's native
+#                          libraries (~40 MB) and sharp's libvips (~18 MB) —
+#                          and, inside them, the transformers.js model cache:
+#                          .../multilingual-e5-small/onnx/model_quantized.onnx
+#                          112.8 MB, written the first time a build embeds.
+#   **/.cache/**           the same cache wherever it is pointed at
+#
+# Nothing large is required to clone or run the app:
+#   - the browser downloads the embedding model from Hugging Face when a search
+#     needs it (it is kept in the browser cache, not in the repo), and
+#   - the build tools fetch the same model on their first run
+#     (tools/lib/embedder.mjs; HADITH_MODEL_CACHE moves that cache elsewhere).
+#
+# Re-check before committing:
+#   Get-ChildItem -Recurse -File -Force | Where-Object Length -gt 99MB
+# ===========================================================================
+
+# dev-only dependencies (and the model cache inside them)
+node_modules/
+**/.cache/
+.model-cache/
+*.onnx
+
+# scraped source pages — the JSON in HadithData/ is the source of truth
+data/
+
+# editors, OS, scratch
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp

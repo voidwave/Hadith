@@ -1,0 +1,24 @@
+{
+ "format": "HIL1",
+ "version": 1,
+ "built": "2026-09-18",
+ "tokenizer": "hadith-core",
+ "docCount": 19921,
+ "termCount": 91276,
+ "postings": 1743507,
+ "droppedTerms": 35,
+ "avgDocLength": 140,
+ "dfCutoff": 0.2,
+ "files": {
+  "lex": "index/lex.bin.gz",
+  "docs": "index/docs.json"
+ },
+ "vectors": {
+  "file": "index/vectors.bin.gz",
+  "model": "Xenova/multilingual-e5-small",
+  "dtype": "q8",
+  "dims": 384,
+  "vectorCount": 33053,
+  "maxTokens": 512
+ }
+}

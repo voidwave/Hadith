@@ -1,0 +1,26 @@
+{
+    "id": "hadith",
+    "name": "أحاديث — البخاري ومسلم وأبو داود",
+    "short_name": "أحاديث",
+    "description": "بحث بالمعنى في ١٩٬٩٢١ حديثًا من صحيح البخاري وصحيح مسلم وسنن أبي داود، مع النص والترجمة والمرجع.",
+    "lang": "ar",
+    "dir": "rtl",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#0a0f10",
+    "theme_color": "#0a0f10",
+    "categories": [
+        "books",
+        "education",
+        "reference"
+    ],
+    "icons": [
+        {
+            "src": "icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}

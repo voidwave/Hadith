@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0f10">
+    <meta name="description"
+        content="ابحث في أحاديث صحيح البخاري وصحيح مسلم وسنن أبي داود بالمعنى أو باللفظ، مع نص الحديث وترجمته ومرجعه.">
+    <title>أحاديث — بحث في البخاري ومسلم وأبي داود</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+    <script>
+        /* Theme before the first paint, so the page never flashes the wrong one. */
+        (function () {
+            var theme = 'dark';
+            try {
+                theme = localStorage.getItem('hadith-theme')
+                    || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            } catch (error) { /* storage may be disabled */ }
+            document.documentElement.setAttribute('data-theme', theme);
+        }());
+    </script>
+    <style>
+        :root {
+            --bg: #0a0f10;
+            --surface: #121a1c;
+            --surface-2: #182226;
+            --line: #22302f;
+            --text: #e9efec;
+            --muted: #93a5a1;
+            --accent: #e2be6a;
+            --accent-text: #14100a;
+            --mark-bg: #4d3f14;
+            --mark-text: #ffe9ab;
+            --sanad: #8fb3ab;
+            --quran: #86d98a;
+            --radius: 14px;
+            --font-ui: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            --font-ar: 'Noto Naskh Arabic', 'Amiri', 'Traditional Arabic', serif;
+            color-scheme: dark;
+        }
+
+        :root[data-theme="light"] {
+            --bg: #f7f5ef;
+            --surface: #ffffff;
+            --surface-2: #fdfbf5;
+            --line: #e3ded1;
+            --text: #1c2321;
+            --muted: #6b7a76;
+            --accent: #9a7615;
+            --accent-text: #ffffff;
+            --mark-bg: #ffe9ab;
+            --mark-text: #4a3708;
+            --sanad: #3f6b63;
+            --quran: #1f7a33;
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .appbar {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px max(16px, env(safe-area-inset-left)) 10px max(16px, env(safe-area-inset-right));
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .appbar h1 {
+            margin: 0;
+            font-size: 1.15rem;
+            letter-spacing: 0;
+        }
+
+        .appbar p {
+            margin: 2px 0 0;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .appbar__tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            font: inherit;
+            font-size: 0.85rem;
+            color: var(--text);
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 7px 14px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+        }
+
+        .btn--primary {
+            background: var(--accent);
+            color: var(--accent-text);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .btn--ghost {
+            background: transparent;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            padding: 12px max(16px, env(safe-area-inset-left)) 0 max(16px, env(safe-area-inset-right));
+        }
+
+        .tab {
+            font: inherit;
+            font-size: 0.95rem;
+            color: var(--muted);
+            background: none;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        .tab.is-active {
+            color: var(--text);
+            border-bottom-color: var(--accent);
+        }
+
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 16px max(16px, env(safe-area-inset-left)) 96px max(16px, env(safe-area-inset-right));
+        }
+
+        .ask {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px;
+        }
+
+        .ask__label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .ask textarea {
+            width: 100%;
+            min-height: 84px;
+            resize: vertical;
+            font: inherit;
+            font-family: var(--font-ar);
+            font-size: 1.1rem;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .ask textarea:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+        }
+
+        .ask__row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .ask__hint {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .meaning {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        #meaning-text {
+            flex: 1 1 auto;
+        }
+
+        .meaning__bar {
+            flex: 0 0 150px;
+            height: 5px;
+            background: var(--line);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .meaning__fill {
+            height: 100%;
+            width: 0;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        /* While the device is parsing the model there is nothing to count, so
+           the bar pulses instead of pretending to advance. */
+        .meaning__fill.is-pulse {
+            animation: meaning-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes meaning-pulse {
+
+            0%,
+            100% {
+                opacity: 0.45;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .dialog {
+            max-width: 32rem;
+            margin: auto;
+            padding: 20px;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+        }
+
+        .dialog::backdrop {
+            background: rgba(4, 8, 10, 0.68);
+        }
+
+        .dialog h2 {
+            margin: 0 0 10px;
+            font-size: 1.05rem;
+        }
+
+        .dialog p {
+            margin: 0 0 16px;
+            font-size: 0.9rem;
+            line-height: 1.9;
+            color: var(--muted);
+        }
+
+        .dialog__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .status {
+            margin: 16px 0 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .status--error {
+            color: #e08a7a;
+        }
+
+        .answer {
+            margin-top: 16px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .answer__head {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .chip {
+            font-size: 0.75rem;
+            color: var(--muted);
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 3px 10px;
+        }
+
+        .chip--accent {
+            color: var(--accent);
+            border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+        }
+
+        .arabic {
+            font-family: var(--font-ar);
+            font-size: 1.85rem;
+            line-height: 2.05;
+            margin: 10px 0;
+        }
+
+        /* The chain of narration is muted and Quranic quotes are green, the way
+           the source page colours them; the matn stays in the text colour. */
+        .ar-sanad {
+            color: var(--sanad);
+        }
+
+        .ar-quran {
+            color: var(--quran);
+        }
+
+        .narrator {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin: 0 0 6px;
+            text-align: start;
+        }
+
+        .english {
+            font-size: 1rem;
+            color: var(--text);
+            margin: 8px 0 0;
+            white-space: pre-line;
+            text-align: start;
+        }
+
+        mark {
+            background: var(--mark-bg);
+            color: var(--mark-text);
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        details.sanad {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        details.sanad summary {
+            cursor: pointer;
+        }
+
+        details.sanad .arabic {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: var(--text);
+        }
+
+        .answer__foot {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .answer__foot a {
+            color: var(--accent);
+        }
+
+        .results {
+            margin-top: 22px;
+        }
+
+        .results h2 {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 500;
+            margin: 0 0 12px;
+        }
+
+        /* One section per collection, in the order people expect to read them. */
+        .results-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-ar);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 24px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .results-group:first-child {
+            margin-top: 0;
+        }
+
+        .result {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .result__head {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .result__why {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .book {
+            text-align: start;
+            font: inherit;
+            color: inherit;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .book:hover {
+            border-color: var(--accent);
+        }
+
+        .book strong {
+            display: block;
+            font-family: var(--font-ar);
+            font-size: 1.05rem;
+        }
+
+        .book span {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        footer {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+            font-size: 0.78rem;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+        }
+
+        footer a {
+            color: var(--accent);
+        }
+
+        @media (max-width: 620px) {
+            .arabic {
+                font-size: 1.6rem;
+            }
+
+            main {
+                padding-bottom: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="appbar">
+        <div>
+            <h1 data-ui="title">أحاديث</h1>
+            <p data-ui="subtitle">صحيح البخاري · صحيح مسلم · سنن أبي داود</p>
+        </div>
+        <div class="appbar__tools">
+            <button type="button" class="btn" id="language-button" aria-label="تغيير اللغة">EN</button>
+            <button type="button" class="btn" id="theme-button" aria-label="تبديل الوضع">☾</button>
+        </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+        <button type="button" class="tab is-active" data-tab="ask" role="tab" data-ui="tabAsk">اسأل</button>
+        <button type="button" class="tab" data-tab="browse" role="tab" data-ui="tabBrowse">تصفّح</button>
+    </nav>
+
+    <main>
+        <section id="panel-ask" role="tabpanel">
+            <form class="ask" id="ask-form">
+                <label class="ask__label" for="ask-input" data-ui="askLabel">اكتب سؤالك عن مسألة إسلامية</label>
+                <textarea id="ask-input" rows="3" placeholder="مثال: ماذا قال النبي ﷺ عن الغضب؟"
+                    data-ui-placeholder="askPlaceholder"></textarea>
+                <div class="ask__row">
+                    <button type="submit" class="btn btn--primary" id="ask-button" data-ui="askButton">ابحث عن
+                        الأحاديث</button>
+                    <span class="ask__hint" data-ui="askHint">يبحث في ١٩٬٩٢١ حديثًا باللفظ والمعنى</span>
+                </div>
+                <div class="meaning" id="meaning">
+                    <span id="meaning-text" data-ui="modelChecking">جارٍ التحقق من نموذج الفهم …</span>
+                    <span class="meaning__bar"><span class="meaning__fill" id="meaning-fill"></span></span>
+                    <button type="button" class="btn btn--ghost" id="meaning-button" data-ui="modelButton" hidden>تنزيل
+                        النموذج</button>
+                </div>
+            </form>
+            <p class="status" id="status" role="status"></p>
+            <article class="answer" id="answer" hidden></article>
+            <section class="results" id="results" hidden>
+                <h2 data-ui="related">أحاديث أخرى ذات صلة</h2>
+                <div id="results-list"></div>
+            </section>
+        </section>
+
+        <section id="panel-browse" role="tabpanel" hidden>
+            <div id="browse"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p data-ui="credits">نصوص الأحاديث من <a href="https://sunnah.com" target="_blank" rel="noopener">sunnah.com</a>
+            — صحيح البخاري، صحيح مسلم، سنن أبي داود. كل نتيجة تُظهر مرجعها في المجموعة الأصلية.</p>
+        <p data-ui="note">لا يُصدر هذا الموقع فتاوى ولا آراءً؛ يعرض النصوص ونسبتها فقط. أحكام الحديث الواردة هنا من
+            تخريج الشيخ الألباني كما هي في المصدر.</p>
+    </footer>
+
+    <dialog id="model-dialog" class="dialog" aria-labelledby="model-dialog-title">
+        <h2 id="model-dialog-title" data-ui="modelDialogTitle">تنزيل نموذج الفهم</h2>
+        <p id="model-dialog-body"></p>
+        <div class="dialog__actions">
+            <button type="button" class="btn btn--primary" id="model-dialog-yes" data-ui="modelDialogYes">تنزيل
+                وبدء البحث</button>
+            <button type="button" class="btn btn--ghost" id="model-dialog-no" data-ui="modelDialogNo">لاحقًا</button>
+        </div>
+    </dialog>
+
+    <script src="hadith-core.js"></script>
+    <script src="hadith-index.js"></script>
+    <script src="hadith-search.js"></script>
+    <script src="search.js"></script>
+    <script src="index.js"></script>
+    <script src="pwa.js"></script>
+</body>
+
+</html>
