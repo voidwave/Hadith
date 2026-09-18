@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" translate="no">
+<head>
+  <meta name="fragment" content="!">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="EN"/>
+  <meta name="description" content="Hadith of the Prophet Muhammad (saws) in English and Arabic"/>
+  <meta name="keywords" content="hadith, hadeeth, sunnah, bukhari, muslim, sahih, sunan, tirmidhi, nawawi, holy, arabic, iman, islam, Allah, book, english"/>
+  <meta name="Charset" content="UTF-8"/> 
+  <meta name="Distribution" content="Global"/>
+  <meta name="Rating" content="General"/>
+ 
+  <meta property="og:image" content="https://sunnah.com/images/hadith_icon2_huge.png" />
+  <meta property="og:description" content="
+Narrated Abu Huraira:
+
+The Prophet (ﷺ) said, &quot;Procrastination (delay) in paying debts by a wealthy man is injustice. So, if your 
+debt is transferred from your debtor to a rich debtor, you should agree.&quot;" />
+  <meta name="csrf-param" content="_csrf_frontend">
+<meta name="csrf-token" content="RQ5JX1r7sDiDC333Uq_PYKhnvrpVRxXpIyiOKJ20wZ4pXQ4nPL3hdvtZGcYonJhT7Anw0CQFT4drT8tx38OYyA==">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/all.css?ver=1671835438" media="screen" rel="stylesheet" type="text/css" />
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png">
+  <link rel="image_src" href="/images/hadith_icon2.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="/js/jquery.cookie.js"></script>
+  <!--<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js" async></script>-->
+
+  
+	<script>
+	    var collection = 'bukhari';
+	    var bookID = '38';
+		var pageType = 'hadithtext';
+		var spshowing = true;
+		var avbl_languages = ["urdu"];
+	</script>
+  	<script>
+		</script>
+  <script src="/js/sunnah.js?ver=1669330061"></script>
+  <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+ 
+  <title>
+	Transferance of a Debt from One Person to Another (Al-Hawaala) - Sunnah.com - Sayings and Teachings of Prophet Muhammad (صلى الله عليه و سلم)
+  </title>
+</head>
+
+<body>
+<div id="fb-root"></div>
+	
+<div id="site">
+	<div id="header">
+    	<div id="toolbar">
+       		<div id="toolbarRight">
+				            <a href="https://quran.com">Qur'an</a> |
+            <a href="https://sunnah.com"><b>Sunnah</b></a> |
+            <a href="https://salah.com">Prayer Times</a> |
+            <a href="https://quranicaudio.com">Audio</a> 
+	        </div>
+    	</div>
+
+		<a href="https://sunnah.com"><div id="banner" class=bannerTop></div></a>
+		<!-- <a href="#"><div id=back-to-top></div></a> -->
+		
+<div id=search>
+    <a class="searchtipslink">Search Tips</a>
+    <div id="searchbar">
+        <form name="searchform" action="/search/" method=get id="searchform">
+            <input type="text" class="searchquery" name=q placeholder= "Search …" value="" />
+            <input type="submit" class="searchsubmit" value="l" />
+        </form>
+    </div>
+
+	<div id="searchtips">
+		<div class=clear></div>
+		<b>Quotes</b> e.g. "pledge allegiance"<br>
+		Searches for the whole phrase instead of individual words
+		<p>
+		<b>Wildcards</b> e.g. test*<br>
+		Matches any set of one or more characters. For example test* would result in test, tester, testers, etc.
+		<p>
+		<b>Fuzzy Search</b> e.g. swore~<br>
+		Finds terms that are similar in spelling. For example swore~ would result in swore, snore, score, etc.
+		<p>
+		<b>Term Boosting</b> e.g. pledge^4 hijrah<br>
+		Boosts words with higher relevance. Here, the word <i>pledge</i> will have higher weight than <i>hijrah</i>
+		<p>
+		<b>Boolean Operators</b> e.g. ("pledge allegiance" OR "shelter) AND prayer<br>
+		Create complex phrase and word queries by using Boolean logic.
+		<p>
+		<a href="/searchtips">More ...</a>
+	<div class=clear></div>
+	</div>
+</div>
+		<div class=clear></div>
+		<div class=crumbs><a href="/">Home</a> &#187; <a href="/bukhari">Sahih al-Bukhari</a> &#187; Transferance of a Debt from One Person to Another (Al-Hawaala)</div><div class=clear></div>	</div>
+
+	<div class=clear></div>
+	<div id="topspace"></div>
+
+	<div id="nonheader">
+	<div class="sidePanelContainer">
+		<div style="height: 1px;"></div>
+		<div id="sidePanel">
+			
+<div id="languagePanel">
+
+Language:
+
+<div style="padding-top: 10px;">
+	<input type="radio" name="sidelang" value="english" id="ch_english" onclick="toggleLanguageDisplay('english');" checked="checked"  />
+    <label for="ch_english">English</label>
+</div>             
+<!--
+<div>
+	<input type="checkbox" name="arabic" id="ch_arabic" onclick="" checked="checked" disabled />
+    <label for="ch_arabic">Arabic العربية</label>
+</div>            
+--> 
+
+<div>
+	<input type="radio" name="sidelang" value="urdu" id="ch_urdu" onclick="toggleLanguageDisplay('urdu')"  />
+    <label for="ch_urdu">Urdu &nbsp;<span style="font-family: Jameel Noori Nastaleeq; font-size: 16px;">اردو</span></label>
+</div>             
+
+
+
+</div>
+    	</div>
+	</div><!-- sidePanelContainer close -->
+	<div class="mainContainer"><div id="main">
+	        <div class=clear></div>
+    <div class="book_info">
+    	<div class="book_page_colindextitle">
+    		<div class="book_page_arabic_name arabic">كتاب الحوالات </div>
+			<div class="book_page_number">38&nbsp;&nbsp;</div>    		<div class="book_page_english_name">
+				Transferance of a Debt from One Person to Another (Al-Hawaala)			</div>
+    		<div class=clear></div>
+		</div>
+    	<div class=clear></div>
+		<!-- <div style="width: 20%; float: left; text-align: center; font-size: 20px; padding-top: 16px;"><b>3</b> hadith</div> -->
+
+	
+	<div class=clear></div>
+	</div>
+
+    
+	    <a name="0"></a>
+	<div class="AllHadith">
+	<a name=C1.00></a>
+<div class=chapter>
+<div class=echapno>(1)</div><div class=englishchapter>Chapter: Al-Hawala (the transference of a debt from one person to another)</div>
+<div class=achapno>(1)</div>
+<div class="arabicchapter arabic">باب فِي الْحَوَالَةِ، وَهَلْ يَرْجِعُ فِي الْحَوَالَةِ</div><div class=clear></div>
+</div>
+<div class="arabic achapintro aconly">وَقَالَ الْحَسَنُ وَقَتَادَةُ إِذَا كَانَ يَوْمَ أَحَالَ عَلَيْهِ مَلِيًّا جَازَ.<br>
+وَقَالَ ابْنُ عَبَّاسٍ يَتَخَارَجُ الشَّرِيكَانِ وَأَهْلُ الْمِيرَاثِ، فَيَأْخُذُ هَذَا عَيْنًا وَهَذَا دَيْنًا، فَإِنْ تَوِيَ لأَحَدِهِمَا لَمْ يَرْجِعْ عَلَى صَاحِبِهِ.</div>
+<div class=clear></div>
+<div class="actualHadithContainer hadith_container_bukhari" id=h122070>
+<!-- Begin hadith -->
+
+<a name=1></a>
+<div class="hadith_reference_sticky">Sahih al-Bukhari 2287</div><div class="hadithTextContainers" id=htc122070><div class="englishcontainer" id=t122070><div class="english_hadith_full"><div class=hadith_narrated><p>
+Narrated Abu Huraira:</div><div class=text_details><p>The Prophet (ﷺ) said, "Procrastination (delay) in paying debts by a wealthy man is injustice. So, if your 
+debt is transferred from your debtor to a rich debtor, you should agree."</b></div>
+<div class=clear></div></div></div><div class="arabic_hadith_full arabic"><span class="arabic_sanad arabic">حَدَّثَنَا عَبْدُ اللَّهِ بْنُ يُوسُفَ، أَخْبَرَنَا مَالِكٌ، عَنْ أَبِي الزِّنَادِ، عَنِ الأَعْرَجِ، عَنْ أَبِي هُرَيْرَةَ ـ رضى الله عنه ـ أَنَّ رَسُولَ اللَّهِ صلى الله عليه وسلم قَالَ ‏</span>
+<span class="arabic_text_details arabic">"‏ مَطْلُ الْغَنِيِّ ظُلْمٌ، فَإِذَا أُتْبِعَ أَحَدُكُمْ عَلَى مَلِيٍّ فَلْيَتْبَعْ ‏"</span><span class="arabic_sanad arabic">‏‏.‏</span></div>
+</div>
+<!-- End hadith -->
+
+<div class="clear"></div><div class=bottomItems>
+<table class=hadith_reference cellspacing=0 cellpadding=0><tr><td><b>Reference</b></td><td>&nbsp;:&nbsp;<a href="/bukhari:2287">Sahih al-Bukhari 2287</a></td></tr><tr><td>In-book reference</td><td>&nbsp;:&nbsp;Book 38, Hadith 1</td></tr><tr><td><span class="deprecated_reference">USC-MSA web (English) reference</span></td><td>&nbsp;: <span class="deprecated_reference">Vol. 3, Book 37, Hadith 486</span></td></tr> <tr><td>&nbsp;&nbsp;<span class="deprecated_reference"><i>(deprecated numbering scheme)</i></span></td></tr></table><div class="hadith_permalink"><span class=reportlink href="javascript: void(0);" onclick="reportHadith(21480, 'h122070')">Report Error</span> | <span class=sharelink onclick="share('/bukhari:2287')">Share</span> | <span class=copylink title="Copy hadith to clipboard">Copy</span> <span class=copycbcaret title="Change copy options">▼</span></div></div><div class=clear></div></div><!-- end actual hadith container --><div class=clear></div><a name=C2.00></a>
+<div class=chapter>
+<div class=echapno>(2)</div><div class=englishchapter>Chapter: If somebody's debt are transferred to a rich debtor</div>
+<div class=achapno>(2)</div>
+<div class="arabicchapter arabic">باب إِذَا أَحَالَ عَلَى مَلِيٍّ فَلَيْسَ لَهُ رَدٌّ </div><div class=clear></div>
+</div>
+<div class=clear></div>
+<div class="actualHadithContainer hadith_container_bukhari" id=h122080>
+<!-- Begin hadith -->
+
+<a name=2></a>
+<div class="hadith_reference_sticky">Sahih al-Bukhari 2288</div><div class="hadithTextContainers" id=htc122080><div class="englishcontainer" id=t122080><div class="english_hadith_full"><div class=hadith_narrated><p>
+Narrated Abu Huraira:</div><div class=text_details><p>The Prophet (ﷺ) said, "Procrastination (delay) in paying debts by a wealthy person is injustice. So, if your 
+debt is transferred from your debtor to a rich debtor, you should agree."</b></div>
+<div class=clear></div></div></div><div class="arabic_hadith_full arabic"><span class="arabic_sanad arabic">حَدَّثَنَا مُحَمَّدُ بْنُ يُوسُفَ، حَدَّثَنَا سُفْيَانُ، عَنِ ابْنِ ذَكْوَانَ، عَنِ الأَعْرَجِ، عَنْ أَبِي هُرَيْرَةَ ـ رضى الله عنه ـ عَنِ النَّبِيِّ صلى الله عليه وسلم قَالَ ‏</span>
+<span class="arabic_text_details arabic">"‏ مَطْلُ الْغَنِيِّ ظُلْمٌ، وَمَنْ أُتْبِعَ عَلَى مَلِيٍّ فَلْيَتَّبِعْ ‏"</span><span class="arabic_sanad arabic">‏‏.‏</span></div>
+</div>
+<!-- End hadith -->
+
+<div class="clear"></div><div class=bottomItems>
+<table class=hadith_reference cellspacing=0 cellpadding=0><tr><td><b>Reference</b></td><td>&nbsp;:&nbsp;<a href="/bukhari:2288">Sahih al-Bukhari 2288</a></td></tr><tr><td>In-book reference</td><td>&nbsp;:&nbsp;Book 38, Hadith 2</td></tr><tr><td><span class="deprecated_reference">USC-MSA web (English) reference</span></td><td>&nbsp;: <span class="deprecated_reference">Vol. 3, Book 37, Hadith 487</span></td></tr> <tr><td>&nbsp;&nbsp;<span class="deprecated_reference"><i>(deprecated numbering scheme)</i></span></td></tr></table><div class="hadith_permalink"><span class=reportlink href="javascript: void(0);" onclick="reportHadith(21490, 'h122080')">Report Error</span> | <span class=sharelink onclick="share('/bukhari:2288')">Share</span> | <span class=copylink title="Copy hadith to clipboard">Copy</span> <span class=copycbcaret title="Change copy options">▼</span></div></div><div class=clear></div></div><!-- end actual hadith container --><div class=clear></div><a name=C3.00></a>
+<div class=chapter>
+<div class=echapno>(3)</div><div class=englishchapter>Chapter: If the debts due on a dead person are transferred to somebody, the transference is legal</div>
+<div class=achapno>(3)</div>
+<div class="arabicchapter arabic">باب إِنْ أَحَالَ دَيْنَ الْمَيِّتِ عَلَى رَجُلٍ جَازَ </div><div class=clear></div>
+</div>
+<div class=clear></div>
+<div class="actualHadithContainer hadith_container_bukhari" id=h122090>
+<!-- Begin hadith -->
+
+<a name=3></a>
+<div class="hadith_reference_sticky">Sahih al-Bukhari 2289</div><div class="hadithTextContainers" id=htc122090><div class="englishcontainer" id=t122090><div class="english_hadith_full"><div class=hadith_narrated><p>
+
+     Narrated Salama bin Al-Akwa:</div><div class=text_details><p>
+
+     Once, while we were sitting in the company of Prophet, a dead man was 
+     brought. The Prophet (ﷺ) was requested to lead the funeral prayer for the 
+     deceased. He said, "Is he in debt?" The people replied in the 
+     negative. He said, "Has he left any wealth?" They said, "No." So, he 
+     led his funeral prayer. Another dead man was brought and the people 
+     said, "O Allah's Messenger (ﷺ)! Lead his funeral prayer." The Prophet (ﷺ) said, 
+     "Is he in debt?" They said, "Yes." He said, "Has he left any wealth?" 
+     They said, ''Three Dinars." So, he led the prayer. Then a third dead 
+     man was brought and the people said (to the Prophet (ﷺ) ), Please lead his
+     funeral prayer." He said, "Has he left any wealth?" They said, "No." 
+     He asked, "Is he in debt?" They said, ("Yes! He has to pay) three 
+     Diners.', He (refused to pray and) said, "Then pray for your (dead) 
+     companion." Abu Qatada said, "O Allah's Messenger (ﷺ)! Lead his funeral 
+     prayer, and I will pay his debt." So, he led the prayer.
+<p></b></div>
+<div class=clear></div></div></div><div class="arabic_hadith_full arabic"><span class="arabic_sanad arabic"></span>
+<span class="arabic_text_details arabic">حَدَّثَنَا الْمَكِّيُّ بْنُ إِبْرَاهِيمَ، حَدَّثَنَا يَزِيدُ بْنُ أَبِي عُبَيْدٍ، عَنْ سَلَمَةَ بْنِ الأَكْوَعِ ـ رضى الله عنه ـ قَالَ كُنَّا جُلُوسًا عِنْدَ النَّبِيِّ صلى الله عليه وسلم إِذْ أُتِيَ بِجَنَازَةٍ، فَقَالُوا صَلِّ عَلَيْهَا‏.‏ فَقَالَ ‏"‏ هَلْ عَلَيْهِ دَيْنٌ ‏"‏‏.‏ قَالُوا لاَ‏.‏ قَالَ ‏"‏ فَهَلْ تَرَكَ شَيْئًا ‏"‏‏.‏ قَالُوا لاَ‏.‏ فَصَلَّى عَلَيْهِ ثُمَّ أُتِيَ بِجَنَازَةٍ أُخْرَى، فَقَالُوا يَا رَسُولَ اللَّهِ، صَلِّ عَلَيْهَا‏.‏ قَالَ ‏"‏ هَلْ عَلَيْهِ دَيْنٌ ‏"‏‏.‏ قِيلَ نَعَمْ‏.‏ قَالَ ‏"‏ فَهَلْ تَرَكَ شَيْئًا ‏"‏‏.‏ قَالُوا ثَلاَثَةَ دَنَانِيرَ‏.‏ فَصَلَّى عَلَيْهَا، ثُمَّ أُتِيَ بِالثَّالِثَةِ، فَقَالُوا صَلِّ عَلَيْهَا‏.‏ قَالَ ‏"‏ هَلْ تَرَكَ شَيْئًا ‏"‏‏.‏ قَالُوا لاَ‏.‏ قَالَ ‏"‏ فَهَلْ عَلَيْهِ دَيْنٌ ‏"‏‏.‏ قَالُوا ثَلاَثَةُ دَنَانِيرَ‏.‏ قَالَ ‏"‏ صَلُّوا عَلَى صَاحِبِكُمْ ‏"‏‏.‏ قَالَ أَبُو قَتَادَةَ صَلِّ عَلَيْهِ يَا رَسُولَ اللَّهِ، وَعَلَىَّ دَيْنُهُ‏.‏ فَصَلَّى عَلَيْهِ‏.‏</span><span class="arabic_sanad arabic"></span></div>
+</div>
+<!-- End hadith -->
+
+<div class="clear"></div><div class=bottomItems>
+<table class=hadith_reference cellspacing=0 cellpadding=0><tr><td><b>Reference</b></td><td>&nbsp;:&nbsp;<a href="/bukhari:2289">Sahih al-Bukhari 2289</a></td></tr><tr><td>In-book reference</td><td>&nbsp;:&nbsp;Book 38, Hadith 3</td></tr><tr><td><span class="deprecated_reference">USC-MSA web (English) reference</span></td><td>&nbsp;: <span class="deprecated_reference">Vol. 3, Book 37, Hadith 488</span></td></tr> <tr><td>&nbsp;&nbsp;<span class="deprecated_reference"><i>(deprecated numbering scheme)</i></span></td></tr></table><div class="hadith_permalink"><span class=reportlink href="javascript: void(0);" onclick="reportHadith(21500, 'h122090')">Report Error</span> | <span class=sharelink onclick="share('/bukhari:2289')">Share</span> | <span class=copylink title="Copy hadith to clipboard">Copy</span> <span class=copycbcaret title="Change copy options">▼</span></div></div><div class=clear></div></div><!-- end actual hadith container --><div class=clear></div><!-- <div align=right><i>Content on this page was last updated on </i></div> --></div>	
+	<script>
+		(function () {
+
+			var hCount = $(".chapter").length;
+			var hExpectedCount = 3			
+			if ( hCount != hExpectedCount ) {
+				var message = "\n" + location.pathname.substring(1) + "\tshown: " + hCount + "\texpected: " + hExpectedCount;
+
+				$.ajax({
+					type : "POST",
+					url : "/ajax/log/hadithcount",
+					data: {msg: message, _csrf_frontend:'RQ5JX1r7sDiDC333Uq_PYKhnvrpVRxXpIyiOKJ20wZ4pXQ4nPL3hdvtZGcYonJhT7Anw0CQFT4drT8tx38OYyA=='},
+				});
+			}
+		})();
+	</script>
+
+	
+
+	<div class="clear"></div>
+    </div><!-- main close -->
+	</div> <!-- mainContainer close -->
+	<a href="#"><div id=back-to-top></div></a>
+	<div class="clear"></div>
+	</div> <!-- nonheader close -->
+    
+<div class=footer>
+	<a href="/about">About</a> |
+	<a href="/news">News</a> |
+	<a href="/support">Support</a> |
+	<a href="/developers">Developers</a> |
+    <a href="/contact">Contact</a>
+	<div class="sm_links">
+		<a href="https://www.facebook.com/Sunnahcom-104172848076350" target="_blank"><i class="icn-fb"></i></a>
+		<a href="https://www.instagram.com/_sunnahcom/" target="_blank"><i class="icn-ig"></i></a>
+		<a href="https://twitter.com/SunnahCom" target="_blank"><i class="icn-twitter"></i></a>
+	</div>
+<div class=clear></div>
+</div>
+
+
+<script type="text/javascript">
+var sc_project=7148282;
+var sc_invisible=1;
+var sc_security="63a57073";
+</script>
+<link href="/css/fonts/fontello/css/icn-font.css?ver=1608065995" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript>
+<div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank">
+<img class="statcounter" src="https://c.statcounter.com/7148282/0/63a57073/1/" alt="Web Analytics"></a>
+</div>
+</noscript>
+
+    <div  id="cb_flyout" onchange="saveCbSettings()" style="display: none">
+	<fieldset>
+		<legend>Hadith Text</legend>
+			<label title="The Arabic text of the Hadith.">
+				<input type="checkbox" name="arabic" value="arabic">Arabic</label>
+			<label title="The translation that is displaying on page.">
+				<input type="checkbox" name="translation" value="translation">Translation</label>		
+			<label title="The authenticity grade of the Hadith, if available.">
+				<input type="checkbox" name="grade" value="grade">Grade</label>
+	</fieldset>
+
+	<fieldset>
+		<legend>Reference</legend>
+			<label title="The reference will only contain the collection name and the overall Hadith number.">
+				<input type="radio" name="ref" value="concise">Concise</label>
+			<label title="The reference will contain more information in English and Arabic, such as the book name/number, chapter name/number, Hadith number within book, etc., whatever is available.">
+				<input type="radio" name="ref" value="detailed">Detailed</label>
+			<label title="The web link for the Hadith.">
+				<input type="checkbox" name="url" value="url">URL</label>
+	</fieldset>
+</div>	<div class="clear"></div>
+
+</div><!-- site div close -->
+</body>
+</html>
+
