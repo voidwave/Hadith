@@ -20,5 +20,10 @@
   "dims": 384,
   "vectorCount": 33053,
   "maxTokens": 512
+ },
+ "topics": {
+  "file": "index/topics.json.gz",
+  "count": 7151,
+  "built": "2026-09-18"
  }
 }

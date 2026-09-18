@@ -23,6 +23,7 @@ An Arabic-first web app for asking a question about an Islamic matter and readin
 - � **The model is required, and says its size first** — search is words *and* meaning, so on a device that does not have the model yet the app states the exact download before anything moves (~258 MB with WebGPU, ~141 MB without) and starts only after a yes. Once it is on the device the app switches it on by itself, silently, on every later visit — and no question is ever searched without it.
 - 📊 **A bar that counts bytes** — the download reports *loaded of total, whole download*, not whichever file happens to be moving; when the bytes stop the stage changes to building the model, and a long silence says so in words rather than looking stuck.
 - 🌙 **Arabic-first** — RTL layout, dark/light themes, responsive, installable PWA, works offline.
+- 📚 **Browse four ways** — a tab per collection (its books, then their chapters and hadiths) and one tab listing **every chapter of all three** (7,151 topics, filterable by topic name, book or collection), where a topic opens its book at that chapter.
 
 ## 📦 Data Sources & Credits
 
@@ -65,6 +66,7 @@ The model weights are deliberately **not** in this repository (the quantised fil
 | `node tools/build-hadith-data.mjs [--clean]` | Parses the scraped pages into `HadithData/` (add `--clean` to delete `data/` once verified) |
 | `node tools/test-parse.mjs` | Checks the JSON on its own: totals, record shape, numbering, known hadiths |
 | `node tools/build-search-index.mjs` | Builds the BM25 index (`index/lex.bin.gz`, `index/docs.json`) |
+| `node tools/build-topics-index.mjs` | Builds `index/topics.json.gz` — every named chapter of the three collections in one list (7,151 topics, 386 KB), so the browse screen never reads 35 MB of book files just to name the chapters |
 | `node tools/build-embeddings.mjs [--limit N]` | Embeds every hadith (`index/vectors.bin.gz`) — ~20 minutes, one time |
 | `node tools/test-core.mjs` | Checks the Arabic normalisation and highlighting rules |
 | `node tools/eval-retrieval.mjs` | **The accuracy gate**: rare-token recall plus real Arabic/English questions, words-only vs words+meaning |
@@ -90,6 +92,7 @@ HadithData/
   abudawud/1..43.json
   index/lex.bin.gz         # BM25 index        (built by build-search-index.mjs)
   index/docs.json          # docId → collection/book/hadith
+  index/topics.json.gz     # every named chapter (built by build-topics-index.mjs)
   index/vectors.bin.gz     # embeddings        (built by build-embeddings.mjs)
   index/manifest.json      # formats, counts, model, build date
 tools/                     # the build and test scripts

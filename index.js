@@ -71,7 +71,13 @@
             booksOf: 'كتب',
             hadiths: 'حديثًا',
             noBooks: 'جارٍ التحميل …',
-            browseHint: 'اختر مجموعة ثم كتابًا لعرض أحاديثه',
+            tabTopics: 'جميع الأبواب',
+            browseHint: 'اختر كتابًا لتقرأ أحاديثه',
+            topicsHint: 'كل الأبواب المسماة في المجموعات الثلاث في قائمة واحدة.',
+            topicsFilter: 'ابحث في الأبواب أو الكتب …',
+            topicsNone: 'لا باب يطابق هذا الاسم.',
+            topicsWord: 'بابًا',
+            fromBookStart: 'من بداية الكتاب',
             back: 'رجوع',
             error: 'حدث خطأ — تحقق من الاتصال وأعد المحاولة.'
         },
@@ -124,7 +130,13 @@
             booksOf: 'books',
             hadiths: 'hadiths',
             noBooks: 'Loading …',
-            browseHint: 'Pick a collection, then a book',
+            tabTopics: 'All topics',
+            browseHint: 'Pick a book to read its hadiths',
+            topicsHint: 'Every named chapter of the three collections, in one list.',
+            topicsFilter: 'Search a topic or a book …',
+            topicsNone: 'No topic matches that name.',
+            topicsWord: 'topics',
+            fromBookStart: 'From the start of the book',
             back: 'Back',
             error: 'Something went wrong — check your connection and try again.'
         }
@@ -552,7 +564,166 @@
 
     /* ------------------------------------------------------------- browse --- */
 
-    let browseStack = [];
+    /* Four tabs: the three collections, each listing its own books, and one list
+       of every named chapter of all three. That list is built offline
+       (index/topics.json.gz — 7,151 topics in 386 KB) so the browser never has
+       to read 35 MB of book files just to name the chapters. */
+    const BROWSE_TABS = ['bukhari', 'muslim', 'abudawud', 'topics'];
+    let browseTab = 'bukhari';
+    let browseStack = [];        // [] | [[collection, book, chapter|null]]
+    let topicQuery = '';
+
+    function go(hash) {
+        if (location.hash === hash) route();
+        else location.hash = hash;
+    }
+
+    function tabBar(active) {
+        return `<div class="subtabs" role="tablist">` + BROWSE_TABS.map(id => [
+            `<button type="button" role="tab" aria-selected="${id === active}"`,
+            ` class="subtab${id === active ? ' is-active' : ''}" data-browse-tab="${id}">`,
+            `${html.escape(id === 'topics' ? t('tabTopics') : collectionName(id))}</button>`
+        ].join('')).join('') + `</div>`;
+    }
+
+    /* The same normalisation the search uses, so «الأيمان» finds «باب الأيمان»
+       and «kitab» finds «Kitab al-Iman». */
+    function normalizeText(text) {
+        return String(text || '').toLowerCase().split(/\s+/)
+            .map(word => core.normalizeArabicWord(word) || core.normalizeEnglishWord(word))
+            .filter(Boolean)
+            .join(' ');
+    }
+
+    function collectionOf(id) {
+        return app.catalog ? app.catalog.collections.find(item => item.id === id) : null;
+    }
+
+    function bookNameOf(collectionId, bookNumber) {
+        const collection = collectionOf(collectionId);
+        const book = collection && collection.books.find(item => item.number === Number(bookNumber));
+        return book ? (language === 'ar' ? book.arabic : book.english) : '';
+    }
+
+    function renderBrowseTabs(active) {
+        const bar = document.createElement('div');
+        bar.innerHTML = tabBar(active);
+        elements.browse.appendChild(bar);
+    }
+
+    function renderBooks(collectionId) {
+        const collection = collectionOf(collectionId);
+        if (!collection) return;
+        const section = document.createElement('section');
+        section.innerHTML = [
+            `<p class="status">${html.escape(t('browseHint'))}`,
+            ` <span class="chip">${num(collection.books.length)} ${html.escape(t('booksOf'))}</span>`,
+            ` <span class="chip">${num(collection.hadiths)} ${html.escape(t('hadiths'))}</span></p>`,
+            `<div class="books">`,
+            collection.books.map(book => [
+                `<button type="button" class="book" data-book="${html.escape(collection.id)}/${book.number}">`,
+                `<strong>${html.escape(language === 'ar' ? book.arabic : book.english)}</strong>`,
+                `<span>${html.escape(t('booksOf'))} ${book.number} · ${num(book.hadiths)} ${html.escape(t('hadiths'))}</span>`,
+                `</button>`
+            ].join('')).join(''),
+            `</div>`
+        ].join('');
+        elements.browse.appendChild(section);
+    }
+
+    /* Every named chapter of the three collections, filterable by topic, book or
+       collection, opening the hadiths of the one that is chosen. */
+    async function renderTopics() {
+        const holder = document.createElement('div');
+        holder.innerHTML = `<p class="status">${html.escape(t('noBooks'))}</p>`;
+        elements.browse.appendChild(holder);
+
+        let data;
+        try {
+            data = await app.topics();
+        } catch (error) {
+            holder.innerHTML = `<p class="status status--error">${html.escape(t('error'))}</p>`;
+            return;
+        }
+        holder.remove();
+
+        const head = document.createElement('div');
+        head.className = 'topics__head';
+        head.innerHTML = `<p class="status">${html.escape(t('topicsHint'))} <span class="chip" id="topics-count"></span></p>`;
+        const count = head.querySelector('#topics-count');
+
+        const filter = document.createElement('input');
+        filter.type = 'search';
+        filter.id = 'topics-filter';
+        filter.className = 'topics__filter';
+        filter.placeholder = t('topicsFilter');
+        filter.setAttribute('aria-label', t('topicsFilter'));
+        filter.value = topicQuery;
+
+        const list = document.createElement('div');
+        list.className = 'topics';
+        const empty = document.createElement('p');
+        empty.className = 'status';
+        empty.textContent = t('topicsNone');
+        const more = document.createElement('button');
+        more.type = 'button';
+        more.className = 'btn';
+        more.textContent = t('showMore');
+
+        /* Normalised once per topic, then reused for every keystroke. */
+        function keyOf(topic) {
+            if (!topic.key) {
+                topic.key = normalizeText([
+                    topic.ar, topic.en,
+                    bookNameOf(topic.collection, topic.book),
+                    collectionName(topic.collection)
+                ].join(' '));
+            }
+            return topic.key;
+        }
+
+        let matches = [];
+        let shown = 0;
+
+        function renderChunk() {
+            for (const topic of matches.slice(shown, shown + BROWSE_CHUNK)) {
+                const name = (language === 'ar' ? (topic.ar || topic.en) : (topic.en || topic.ar))
+                    .replace(/^باب\s+/, '');
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'topic';
+                item.dataset.topic = `${topic.collection}/${topic.book}/${topic.chapter}`;
+                item.innerHTML = [
+                    `<span class="topic__n">${html.escape(num(topic.n))}</span>`,
+                    `<span class="topic__name">${html.escape(name)}`,
+                    `<span class="topic__meta">`,
+                    `<span class="chip chip--accent">${html.escape(collectionName(topic.collection))}</span>`,
+                    `<span class="chip">${html.escape(bookNameOf(topic.collection, topic.book))}</span>`,
+                    topic.hadiths ? `<span class="chip">${html.escape(num(topic.hadiths))} ${html.escape(t('hadiths'))}</span>` : '',
+                    `</span></span>`
+                ].join('');
+                list.appendChild(item);
+            }
+            shown += Math.min(BROWSE_CHUNK, matches.length - shown);
+            more.hidden = shown >= matches.length;
+            empty.hidden = matches.length > 0;
+        }
+
+        function apply(value) {
+            topicQuery = value;
+            const needle = normalizeText(value);
+            matches = needle ? data.topics.filter(topic => keyOf(topic).includes(needle)) : data.topics;
+            shown = 0;
+            list.innerHTML = '';
+            count.textContent = `${num(matches.length)} ${t('topicsWord')}`;
+            renderChunk();
+        }
+
+        filter.addEventListener('input', () => apply(filter.value));
+        more.addEventListener('click', renderChunk);
+        elements.browse.append(head, filter, list, more, empty);
+        apply(topicQuery);
+    }
 
     async function renderBrowse() {
         if (!app.catalog) {
@@ -564,29 +735,28 @@
                 return;
             }
         }
-        const where = browseStack.length ? browseStack[browseStack.length - 1] : null;
-        if (!where) {
-            const sections = app.catalog.collections.map(collection => [
-                `<h2 class="results-meta">${html.escape(language === 'ar' ? collection.arabic : collection.english)}`,
-                ` <span class="chip">${collection.books.length} ${html.escape(t('booksOf'))}</span>`,
-                ` <span class="chip">${collection.hadiths.toLocaleString(language === 'ar' ? 'ar-EG' : 'en')} ${html.escape(t('hadiths'))}</span></h2>`,
-                `<div class="books">`,
-                collection.books.map(book => [
-                    `<button type="button" class="book" data-book="${html.escape(collection.id)}/${book.number}">`,
-                    `<strong>${html.escape(language === 'ar' ? book.arabic : book.english)}</strong>`,
-                    `<span>${html.escape(t('booksOf'))} ${book.number} · ${book.hadiths.toLocaleString(language === 'ar' ? 'ar-EG' : 'en')} ${html.escape(t('hadiths'))}</span>`,
-                    `</button>`
-                ].join('')).join(''),
-                `</div>`
-            ].join(''));
-            elements.browse.innerHTML = `<p class="status">${html.escape(t('browseHint'))}</p>` + sections.join('');
+        elements.browse.innerHTML = '';
+        if (browseStack.length) {
+            renderBrowseTabs(browseStack[0][0]);
+            await renderBook(browseStack[0][0], browseStack[0][1], browseStack[0][2]);
             return;
         }
+        renderBrowseTabs(browseTab);
+        if (browseTab === 'topics') await renderTopics();
+        else renderBooks(browseTab);
+    }
 
-        const [collectionId, bookNumber] = where;
-        elements.browse.innerHTML = `<p class="status">${html.escape(t('noBooks'))}</p>`;
+    /* One book, read chapter by chapter. Arriving from a topic starts at that
+       chapter; otherwise the book opens at its first hadith. */
+    async function renderBook(collectionId, bookNumber, chapter) {
+        const body = document.createElement('div');
+        body.innerHTML = `<p class="status">${html.escape(t('noBooks'))}</p>`;
+        elements.browse.appendChild(body);
         const page = await app.bookOf(collectionId, Number(bookNumber));
-        let shown = 0;
+        const startAt = chapter === null || chapter === undefined
+            ? 0
+            : Math.max(0, page.hadiths.findIndex(hadith => hadith.ch === chapter));
+        let shown = startAt;
         const list = document.createElement('div');
         const more = document.createElement('button');
         more.type = 'button';
@@ -598,13 +768,13 @@
             let lastChapter = shown > 0 ? page.hadiths[shown - 1].ch : -2;
             for (const hadith of slice) {
                 if (hadith.ch !== lastChapter && hadith.ch >= 0 && page.chapters[hadith.ch]) {
-                    const chapter = page.chapters[hadith.ch];
-                    const name = language === 'ar' ? chapter.ar : chapter.en;
+                    const heading = page.chapters[hadith.ch];
+                    const name = language === 'ar' ? heading.ar : heading.en;
                     if (name) {
-                        const heading = document.createElement('h2');
-                        heading.className = 'results-meta';
-                        heading.textContent = name;
-                        list.appendChild(heading);
+                        const title = document.createElement('h2');
+                        title.className = 'results-meta';
+                        title.textContent = name;
+                        list.appendChild(title);
                     }
                 }
                 lastChapter = hadith.ch;
@@ -623,21 +793,22 @@
             more.hidden = shown >= page.hadiths.length;
         }
 
+        const opened = startAt > 0 ? page.chapters[page.hadiths[startAt].ch] : null;
         const header = document.createElement('div');
+        header.className = 'browse__head';
         header.innerHTML = [
             `<h2 class="results-meta">${html.escape(language === 'ar' ? page.book.arabic : page.book.english)}`,
-            ` <span class="chip">${html.escape(language === 'ar' ? collectionName(collectionId) : collectionName(collectionId))}</span></h2>`,
-            `<button type="button" class="btn btn--ghost" id="browse-back">${html.escape(t('back'))}</button>`
+            ` <span class="chip">${html.escape(collectionName(collectionId))}</span></h2>`,
+            opened ? `<p class="status">${html.escape(t('chapter'))} ${html.escape(num(opened.nAr || opened.n))}: `
+                + `${html.escape(language === 'ar' ? (opened.ar || opened.en) : (opened.en || opened.ar))}</p>` : '',
+            `<div class="browse__actions">`,
+            startAt > 0 ? `<button type="button" class="btn btn--ghost" data-book-start>${html.escape(t('fromBookStart'))}</button>` : '',
+            `<button type="button" class="btn btn--ghost" data-browse-back>${html.escape(t('back'))}</button>`,
+            `</div>`
         ].join('');
-        elements.browse.innerHTML = '';
-        elements.browse.append(header, list, more);
-        document.getElementById('browse-back').addEventListener('click', () => {
-            browseStack = [];
-            location.hash = '#browse';
-            renderBrowse();
-        });
+        body.innerHTML = '';
+        body.append(header, list, more);
         more.addEventListener('click', renderChunk);
-        more.textContent = t('showMore');
         renderChunk();
     }
 
@@ -656,13 +827,14 @@
     function route() {
         const hash = location.hash.replace(/^#\/?/, '');
         const parts = hash.split('/').filter(Boolean);
-        if (parts[0] === 'browse' && parts.length >= 3) {
-            browseStack = [[parts[1], parts[2]]];
-            showTab('browse');
-            return;
-        }
         if (parts[0] === 'browse') {
-            browseStack = [];
+            if (parts.length >= 3) {
+                const chapter = parts.length >= 4 ? Number(parts[3]) : NaN;
+                browseStack = [[parts[1], parts[2], Number.isFinite(chapter) ? chapter : null]];
+            } else {
+                browseStack = [];
+                if (BROWSE_TABS.includes(parts[1])) browseTab = parts[1];
+            }
             showTab('browse');
             return;
         }
@@ -732,12 +904,30 @@
         });
     }
     document.getElementById('browse').addEventListener('click', event => {
-        const button = event.target.closest('[data-book]');
-        if (!button) return;
-        const [collectionId, bookNumber] = button.dataset.book.split('/');
-        location.hash = `#browse/${collectionId}/${bookNumber}`;
-        browseStack = [[collectionId, bookNumber]];
-        renderBrowse();
+        const tab = event.target.closest('[data-browse-tab]');
+        if (tab) {
+            go(`#browse/${tab.dataset.browseTab}`);
+            return;
+        }
+        const book = event.target.closest('[data-book]');
+        if (book) {
+            go(`#browse/${book.dataset.book}`);
+            return;
+        }
+        const topic = event.target.closest('[data-topic]');
+        if (topic) {
+            go(`#browse/${topic.dataset.topic}`);
+            return;
+        }
+        if (event.target.closest('[data-book-start]')) {
+            const where = browseStack[0] || [];
+            go(`#browse/${where[0]}/${where[1]}`);
+            return;
+        }
+        if (event.target.closest('[data-browse-back]')) {
+            const where = browseStack[0] || [];
+            go(where[0] ? `#browse/${where[0]}` : '#browse');
+        }
     });
     window.addEventListener('hashchange', route);
 

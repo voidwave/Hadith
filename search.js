@@ -3,6 +3,7 @@
  *
  * Loads what is needed, when it is needed:
  *   catalog.json            always, on start (a few KB, fills the browse view)
+ *   index/topics.json.gz    the browse screen's "all topics" list (~386 KB)
  *   index/lex.bin.gz        on the first question (~3 MB, the word index)
  *   index/docs.json         with it (docId → collection/book/hadith)
  *   index/vectors.bin.gz    when the meaning model is switched on (~10 MB)
@@ -32,6 +33,7 @@
 
     const PATHS = {
         catalog: 'HadithData/catalog.json',
+        topics: 'HadithData/index/topics.json.gz',
         lexical: 'HadithData/index/lex.bin.gz',
         docs: 'HadithData/index/docs.json',
         vectors: 'HadithData/index/vectors.bin.gz',
@@ -141,6 +143,7 @@
 
         const books = new Map();        // "bukhari/1" → parsed book file
         let catalog = null;
+        let topicsIndex = null;
         let index = null;
         let docs = null;
         let vectors = null;
@@ -199,6 +202,16 @@
             catalog = await fetchJson(PATHS.catalog);
             state.ready = true;
             return catalog;
+        }
+
+        /* Every named chapter of the three collections in one list — built by
+           tools/build-topics-index.mjs, so the browser never reads 196 book
+           files just to name them. */
+        async function loadTopics() {
+            if (topicsIndex) return topicsIndex;
+            const bytes = await fetchGzip(PATHS.topics);
+            topicsIndex = JSON.parse(new TextDecoder().decode(bytes));
+            return topicsIndex;
         }
 
         async function loadLexical() {
@@ -409,6 +422,7 @@
             ask,
             hadithOf,
             bookOf,
+            topics: loadTopics,
             enableMeaning,
             inspectModel,
             loadLexical,
